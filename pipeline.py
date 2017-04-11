@@ -93,14 +93,17 @@ def pipeline(lstPathNii,
     Notes
     -----
     (1) The reference ROI time course is plotted.
+
     (2) The difference 'Granger causality' between the reference time course
-    and all voxels is computed. The difference in 'Granger causality' is the
-    'Granger causality' from x to y minus the 'Granger causality' from y to x.
+        and all voxels is computed. The difference in 'Granger causality' is
+        the 'Granger causality' from x to y minus the 'Granger causality' from
+        y to x.
+
     (3) The result is saved in nii format.
 
     References
     ----------
-    <http://nipy.org/nitime/examples/granger_fmri.html>
+    http://nipy.org/nitime/examples/granger_fmri.html
     """
     # *************************************************************************
     # *** Preparations

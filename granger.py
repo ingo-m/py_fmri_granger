@@ -53,9 +53,9 @@ def granger(idxPrc,  #noqa
     varTr : float
         Volume TR of nii data.
     varFreqMin : float
-        Lower bound on the frequency band of interest [sˆ-1].
+        Lower bound on the frequency band of interest [s^-1].
     varFreqMax : float
-        Upper bound on the frequency band of interest [sˆ-1].
+        Upper bound on the frequency band of interest [s^-1].
     varPar : int
         Number of parallel processes that are run in parallel (only used for
         status update here).
