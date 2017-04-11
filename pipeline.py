@@ -29,7 +29,7 @@ import multiprocessing as mp
 from granger import granger
 
 
-def pipeline(lstPathNii,
+def pipeline(lstPathNii,  #noqa
              strPathRoi,
              strPathOut,
              strSessionId,
@@ -44,6 +44,7 @@ def pipeline(lstPathNii,
              strXlabel='Time [volumes]',
              strYlabel='Percent signal change',
              strTitle='Reference ROI time course',
+             lgcStatus=False
              ):
     """
     Granger 'causality' analysis pipeline.
@@ -84,6 +85,8 @@ def pipeline(lstPathNii,
         Label for the y-axis.
     strTitle: str
         Figure title.
+    lgcStatus : bool
+        Whether or not to print status messages.
 
     Returns
     -------
@@ -107,9 +110,9 @@ def pipeline(lstPathNii,
     """
     # *************************************************************************
     # *** Preparations
-    print('---Preparations')
-
-    print('------Loading nii data')
+    if lgcStatus:
+        print('---Preparations')
+        print('------Loading nii data')
 
     # List for nii data of all runs:
     lstFunc = [None] * len(lstPathNii)
@@ -128,7 +131,8 @@ def pipeline(lstPathNii,
     aryRoi, hdrRoi, aryAffRoi = load_nii(strPathRoi)
     # aryMask, hdrMask, aryAffMask = load_nii(strPathMsk)
 
-    print('------Normalising & taking mean ROI time course')
+    if lgcStatus:
+        print('------Normalising & taking mean ROI time course')
 
     # Take mean across time:
     aryFuncTmean = np.mean(aryFunc,
@@ -157,7 +161,8 @@ def pipeline(lstPathNii,
     # Set voxels with zeros value in mean image to zero in PSC array:
     aryFunc[np.logical_not(aryLgcNotZero), :] = 0.0
 
-    print('------Extract ROI time course')
+    if lgcStatus:
+        print('------Extract ROI time course')
 
     # Create average time course within ROI. Start by creating a logical array
     # with indicies of non-zero voxels in mask:
@@ -170,7 +175,8 @@ def pipeline(lstPathNii,
     # *************************************************************************
     # *** Plot ROI time course
 
-    print('---Creating ROI time course plot')
+    if lgcStatus:
+        print('---Creating ROI time course plot')
 
     # Create figure:
     fgr01 = plt.figure(figsize=(800.0/varDpi, 500.0/varDpi),
@@ -218,9 +224,9 @@ def pipeline(lstPathNii,
     # *************************************************************************
     # *** Granger causality analysis
 
-    print('---Granger causality analysis')
-
-    print('------Preparing parallelisation')
+    if lgcStatus:
+        print('---Granger causality analysis')
+        print('------Preparing parallelisation')
 
     # Empty list for results (Granger causality difference):
     lstRes = [None] * varPar
@@ -272,8 +278,10 @@ def pipeline(lstPathNii,
     # Number of voxels for which Granger analysis will be performed:
     varNumVoxInc = aryFunc.shape[0]
 
-    print('------Number of voxels on which ranger analysis will be performed: '
-          + str(varNumVoxInc))
+    if lgcStatus:
+        print('------Number of voxels on which ranger analysis will be '
+              + 'performed: '
+              + str(varNumVoxInc))
 
     # List into which the chunks of functional data for the parallel processes
     # will be put:
@@ -299,7 +307,8 @@ def pipeline(lstPathNii,
     # We don't need the original array with the functional data anymore:
     del(aryFunc)
 
-    print('------Creating parallel processes')
+    if lgcStatus:
+        print('------Creating parallel processes')
 
     # Create processes:
     for idxPrc in range(0, varPar):
@@ -328,7 +337,8 @@ def pipeline(lstPathNii,
     for idxPrc in range(0, varPar):
         lstPrcs[idxPrc].join()
 
-    print('------Prepare results for export')
+    if lgcStatus:
+        print('------Prepare results for export')
 
     # Create list for vectors with analysis results, in order to put the
     # results into the correct order:

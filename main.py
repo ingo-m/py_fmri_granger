@@ -93,14 +93,22 @@ varPar = 10
 # *****************************************************************************
 # *** Run Granger analysis
 
+print('-Granger analysis')
+
 # Loop through subjects:
 for strSubId in lstSubId:
+
+    print('--Subject: ' + strSubId)
 
     # Loop through conditions:
     for strConId in lstConId:
 
+        print('---Condition: ' + strConId)
+
         # Loop through reference ROIs:
         for strRoiId in lstRoiId:
+
+            print('----Reference ROI: ' + strRoiId)
 
             # Create list with paths of all runs of current session:
             lstPathNii = [strPathNii.format(strSubId,
