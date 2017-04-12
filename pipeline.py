@@ -187,7 +187,7 @@ def pipeline(lstPathNii,  #noqa
     # Vector for x-data:
     vecX = range(0, vecRoiMeanPsc.shape[0])
 
-    # Plot depth profile for current input file:
+    # Create plot:
     pltTmp = axs01.plot(vecX,  #noqa
                         vecRoiMeanPsc,
                         color=[0.2, 0.5, 0.7],
